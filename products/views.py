@@ -12,11 +12,14 @@ class ProductListCreateView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filterset_class = ProductFilter
+
     filter_backends = [
         DjangoFilterBackend,
         filters.SearchFilter,
+        filters.OrderingFilter,
     ]
-
+    ordering_fields = ["name", "price","created_at"]
+    ordering = ["-created_at"]
     search_fields = ["name", "description"]
 
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
