@@ -7,11 +7,13 @@ from .models import Product
 from .serializers import ProductSerializer
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.permissions import IsAuthenticated
 
 class ProductListCreateView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filterset_class = ProductFilter
+    permission_classes = [IsAuthenticated]
 
     filter_backends = [
         DjangoFilterBackend,

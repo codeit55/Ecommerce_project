@@ -32,7 +32,7 @@ class CustomUser(AbstractUser):
     class Role(models.TextChoices):
         CUSTOMER = "CUSTOMER", "Customer"
         SELLER = "SELLER", "Seller",
-
+    username = None
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=10, choices=Role.choices, default=Role.CUSTOMER)
 
