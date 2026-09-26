@@ -46,7 +46,31 @@ class CartItemCreateView(generics.CreateAPIView):
 
         cart_item.quantity = new_quantity
         cart_item.save()
-        
+
+class CartItemDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = CartItemSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        cart, created = Cart.objects.get_or_create(
+            user=self.request.user
+        )
+        return cart.items.all()
+
+    def perform_update(self, serializer):
+        new_quantity = serializer.validated_data.get("quantity")
+
+        #serializer automatically creates the instance of cartitem
+        if new_quantity is not None:
+            if new_quantity > serializer.instance.product.stock:
+                raise ValidationError(
+                    f"Out of stock !!"
+                    f"Available stock: {serializer.instance.product.stock}."
+                )
+
+        serializer.save()
+            
+
 
 
         
