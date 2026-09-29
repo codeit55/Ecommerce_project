@@ -67,10 +67,7 @@ class CartItemDetailView(generics.RetrieveUpdateDestroyAPIView):
                     f"Out of stock !!"
                     f"Available stock: {serializer.instance.product.stock}."
                 )
-
         serializer.save()
-
-
 
      
             
