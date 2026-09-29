@@ -69,6 +69,10 @@ class CartItemDetailView(generics.RetrieveUpdateDestroyAPIView):
                 )
 
         serializer.save()
+
+
+
+     
             
 
 
