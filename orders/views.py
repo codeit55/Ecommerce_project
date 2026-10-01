@@ -10,6 +10,9 @@ from .models import Order, OrderItem
 from .serializers import OrderItemSerializer, OrderSerializer
 from cart.models import Cart
 
+from .serializers import SellerOrderItemSerializer, SellerOrderItemUpdateSerializer
+from users.permissions import IsOrderItemSellerOrAdmin
+
 from django.db import transaction
 
 class OrderListView(generics.ListAPIView):
@@ -71,4 +74,20 @@ class CheckoutView(APIView):
     status=status.HTTP_201_CREATED
 )
 
-    
+class SellerOrderItemListView(generics.ListAPIView):
+    serializer_class = SellerOrderItemSerializer
+    permission_class = [IsOrderItemSellerOrAdmin]
+
+    def get_queryset(self):
+        return OrderItem.objects.filter(product__seller = self.request.user).order_by("-order__created_at")
+
+class SellerOrderItemUpdateView(generics.UpdateAPIView):
+    serializer_class = SellerOrderItemUpdateSerializer
+    permission_classes = [
+        IsAuthenticated,
+        IsOrderItemSellerOrAdmin
+    ]
+
+    def get_queryset(self):
+        
+        return OrderItem.objects.filter(product__seller=self.request.user)

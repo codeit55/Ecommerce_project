@@ -24,3 +24,23 @@ class OrderSerializer(serializers.ModelSerializer):
             'created_at',
             'updated_at',
         ]
+
+class SellerOrderItemSerializer(serializers.ModelSerializer):
+    order_id = serializers.IntegerField(source = "order.id", read_only = True)
+    produc_name = serializers.CharField(source = "product.name", read_only = True)
+
+    class Meta:
+        model = OrderItem
+        fields = [
+            'id',
+            'order_id',
+            'produc_name',
+            'product',
+            'quantiy',
+            'price_purchased_at'
+        ]
+
+class SellerOrderItemUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderItem
+        fields = ["status"]
