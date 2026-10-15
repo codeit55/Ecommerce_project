@@ -1,0 +1,299 @@
+[
+{
+  "model": "products.category",
+  "pk": 1,
+  "fields": {
+    "name": "Electronics",
+    "description": "",
+    "created_at": "2026-09-11T11:28:15.359Z"
+  }
+},
+{
+  "model": "products.category",
+  "pk": 2,
+  "fields": {
+    "name": "Fashion",
+    "description": "",
+    "created_at": "2026-09-11T11:28:29.223Z"
+  }
+},
+{
+  "model": "products.category",
+  "pk": 3,
+  "fields": {
+    "name": "Home & Kitchen",
+    "description": "Appliances and home decor",
+    "created_at": "2026-10-15T11:57:51.450Z"
+  }
+},
+{
+  "model": "products.category",
+  "pk": 4,
+  "fields": {
+    "name": "Audio & Wearables",
+    "description": "Headphones, earbuds and smart accessories",
+    "created_at": "2026-10-15T11:57:51.458Z"
+  }
+},
+{
+  "model": "products.category",
+  "pk": 5,
+  "fields": {
+    "name": "Books & Stationery",
+    "description": "Bestsellers, guides and journals",
+    "created_at": "2026-10-15T11:57:51.459Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 1,
+  "fields": {
+    "seller": 3,
+    "name": "TV",
+    "price": "10000.00",
+    "description": "",
+    "stock": 48,
+    "image": "",
+    "category": 1,
+    "created_at": "2026-09-11T11:34:05.109Z",
+    "updated_at": "2026-09-11T11:34:05.109Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 2,
+  "fields": {
+    "seller": 3,
+    "name": "Laptop",
+    "price": "79999.99",
+    "description": "",
+    "stock": 18,
+    "image": "",
+    "category": 1,
+    "created_at": "2026-09-11T11:34:31.071Z",
+    "updated_at": "2026-09-11T11:34:31.071Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 3,
+  "fields": {
+    "seller": 3,
+    "name": "Tshirt",
+    "price": "799.99",
+    "description": "",
+    "stock": 298,
+    "image": "",
+    "category": 2,
+    "created_at": "2026-09-11T11:34:52.807Z",
+    "updated_at": "2026-09-11T11:34:52.807Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 4,
+  "fields": {
+    "seller": 3,
+    "name": "Espresso Coffee Maker",
+    "price": "4999.00",
+    "description": "Compact 15-bar pump espresso maker with milk frother.",
+    "stock": 35,
+    "image": "",
+    "category": 3,
+    "created_at": "2026-10-15T11:57:51.464Z",
+    "updated_at": "2026-10-15T11:57:51.464Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 5,
+  "fields": {
+    "seller": 3,
+    "name": "Ergonomic Office Chair",
+    "price": "8499.00",
+    "description": "Breathable mesh back chair with adjustable lumbar support.",
+    "stock": 20,
+    "image": "",
+    "category": 3,
+    "created_at": "2026-10-15T11:57:51.472Z",
+    "updated_at": "2026-10-15T11:57:51.472Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 6,
+  "fields": {
+    "seller": 3,
+    "name": "Wireless Noise Cancelling Headphones",
+    "price": "6999.00",
+    "description": "Over-ear Bluetooth headphones with 40-hour battery life.",
+    "stock": 42,
+    "image": "",
+    "category": 4,
+    "created_at": "2026-10-15T11:57:51.473Z",
+    "updated_at": "2026-10-15T11:57:51.473Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 7,
+  "fields": {
+    "seller": 3,
+    "name": "Smart Fitness Tracker Watch",
+    "price": "2499.00",
+    "description": "Water-resistant fitness tracker with heart rate monitor.",
+    "stock": 65,
+    "image": "",
+    "category": 4,
+    "created_at": "2026-10-15T11:57:51.474Z",
+    "updated_at": "2026-10-15T11:57:51.474Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 8,
+  "fields": {
+    "seller": 3,
+    "name": "Minimalist Leather Backpack",
+    "price": "1899.00",
+    "description": "Handcrafted durable laptop backpack for daily commute.",
+    "stock": 50,
+    "image": "",
+    "category": 2,
+    "created_at": "2026-10-15T11:57:51.475Z",
+    "updated_at": "2026-10-15T11:57:51.475Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 9,
+  "fields": {
+    "seller": 3,
+    "name": "Denim Classic Jacket",
+    "price": "2299.00",
+    "description": "Vintage-wash all-season rugged denim jacket.",
+    "stock": 40,
+    "image": "",
+    "category": 2,
+    "created_at": "2026-10-15T11:57:51.477Z",
+    "updated_at": "2026-10-15T11:57:51.477Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 10,
+  "fields": {
+    "seller": 3,
+    "name": "Mechanical Gaming Keyboard",
+    "price": "3499.00",
+    "description": "RGB backlit tactile mechanical keyboard.",
+    "stock": 25,
+    "image": "",
+    "category": 1,
+    "created_at": "2026-10-15T11:57:51.478Z",
+    "updated_at": "2026-10-15T11:57:51.478Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 11,
+  "fields": {
+    "seller": 3,
+    "name": "Ultra-Slim Power Bank 20000mAh",
+    "price": "1299.00",
+    "description": "High-capacity dual USB-C fast charging battery pack.",
+    "stock": 80,
+    "image": "",
+    "category": 1,
+    "created_at": "2026-10-15T11:57:51.479Z",
+    "updated_at": "2026-10-15T11:57:51.479Z"
+  }
+},
+{
+  "model": "products.product",
+  "pk": 12,
+  "fields": {
+    "seller": 3,
+    "name": "Atomic Habits by James Clear",
+    "price": "499.00",
+    "description": "An easy and proven way to build good habits and break bad ones.",
+    "stock": 120,
+    "image": "",
+    "category": 5,
+    "created_at": "2026-10-15T11:57:51.480Z",
+    "updated_at": "2026-10-15T11:57:51.480Z"
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$oixZOuyuEya6IVEmr8zDHI$Mi4fGS+/WydUgNHd/TMqjvLm5gfmuglO9GXPOPvbZM0=",
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-11T11:17:56.127Z",
+    "email": "test123@gmail.com",
+    "role": "CUSTOMER",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$FMvR23sTTX80VhC3dicIrk$15F/Rzpmj1e5GmSw4WvXdfDpd+uZPttVyU3bcbzOiSE=",
+    "last_login": "2026-09-11T11:27:51.460Z",
+    "is_superuser": true,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-09-11T11:27:17.222Z",
+    "email": "admin@gmail.com",
+    "role": "CUSTOMER",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$Zp50Uzfwgp5aYdhbz7mooR$QXD3UzUO8glfpxOCJAy1W0ly2qvmXO3za0g4KJg27hM=",
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-11T11:33:22.757Z",
+    "email": "seller@gmail.com",
+    "role": "SELLER",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$DKd5EPJ9dJNA3tl8qPwvtf$g+UV9N8+6c0lMfjlPzkJU0VR8nm3RU9mOtzsYTX/8uw=",
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-10-15T11:42:55.155Z",
+    "email": "demouser@example.com",
+    "role": "CUSTOMER",
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]
