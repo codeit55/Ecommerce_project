@@ -11,7 +11,7 @@ from .serializers import OrderItemSerializer, OrderSerializer
 from cart.models import Cart
 
 from .serializers import SellerOrderItemSerializer, SellerOrderItemUpdateSerializer
-from users.permissions import IsOrderItemSellerOrAdmin
+from users.permissions import OrderItemIsAdminOrSeller
 
 from django.db import transaction
 
@@ -76,7 +76,7 @@ class CheckoutView(APIView):
 
 class SellerOrderItemListView(generics.ListAPIView):
     serializer_class = SellerOrderItemSerializer
-    permission_class = [IsOrderItemSellerOrAdmin]
+    permission_class = [OrderItemIsAdminOrSeller]
 
     def get_queryset(self):
         return OrderItem.objects.filter(product__seller = self.request.user).order_by("-order__created_at")
@@ -85,7 +85,7 @@ class SellerOrderItemUpdateView(generics.UpdateAPIView):
     serializer_class = SellerOrderItemUpdateSerializer
     permission_classes = [
         IsAuthenticated,
-        IsOrderItemSellerOrAdmin
+        OrderItemIsAdminOrSeller
     ]
 
     def get_queryset(self):
