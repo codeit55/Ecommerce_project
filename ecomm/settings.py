@@ -10,11 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-from pathlib import Path
-from dotenv import load_dotenv
+import importlib.util
 import os
+from pathlib import Path
+import urllib.parse
+from dotenv import load_dotenv
 
 load_dotenv()
+
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,13 +27,25 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=5a=ya2cg_0k30+ozax8b%=f8dib1ra$q1!uq7np2k0@ow120t'
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 't', 'yes')
 
-ALLOWED_HOSTS = []
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.getenv('SECRET_KEY')
+if not SECRET_KEY:
+    if DEBUG:
+        SECRET_KEY = 'django-insecure-=5a=ya2cg_0k30+ozax8b%=f8dib1ra$q1!uq7np2k0@ow120t'
+    else:
+        raise ImproperlyConfigured("The SECRET_KEY environment variable must be set when DEBUG=False.")
+
+# ALLOWED_HOSTS configured via comma-separated environment variable
+allowed_hosts_env = os.getenv('ALLOWED_HOSTS')
+if allowed_hosts_env:
+    ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_env.split(',') if host.strip()]
+elif DEBUG:
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+else:
+    ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -54,13 +70,20 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
+]
+
+# Conditionally enable WhiteNoise middleware if installed
+if importlib.util.find_spec('whitenoise') is not None:
+    MIDDLEWARE.append('whitenoise.middleware.WhiteNoiseMiddleware')
+
+MIDDLEWARE.extend([
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+])
 
 ROOT_URLCONF = 'ecomm.urls'
 
@@ -85,16 +108,32 @@ WSGI_APPLICATION = 'ecomm.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB'),
-        'USER': os.getenv('POSTGRES_USER'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'HOST': os.getenv('POSTGRES_HOST'),
-        'PORT': os.getenv('POSTGRES_PORT'),
+database_url = os.getenv('DATABASE_URL')
+if database_url:
+    # Support DATABASE_URL if provided by hosting platforms (e.g. Render, Railway, Heroku)
+    parsed_db_url = urllib.parse.urlparse(database_url)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': parsed_db_url.path.lstrip('/'),
+            'USER': parsed_db_url.username or '',
+            'PASSWORD': urllib.parse.unquote(parsed_db_url.password or ''),
+            'HOST': parsed_db_url.hostname or '',
+            'PORT': parsed_db_url.port or 5432,
+        }
     }
-}
+else:
+    # Preserve existing PostgreSQL environment variables
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('POSTGRES_DB'),
+            'USER': os.getenv('POSTGRES_USER'),
+            'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+            'HOST': os.getenv('POSTGRES_HOST'),
+            'PORT': os.getenv('POSTGRES_PORT'),
+        }
+    }
 
 
 
@@ -133,6 +172,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+if importlib.util.find_spec('whitenoise') is not None:
+    STORAGES = {
+        'default': {
+            'BACKEND': 'django.core.files.storage.FileSystemStorage',
+        },
+        'staticfiles': {
+            'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+        },
+    }
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -146,10 +196,18 @@ REST_FRAMEWORK = {
         "django_filters.rest_framework.DjangoFilterBackend",
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": (
-    "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
 }
 
-CORS_ALLOWED_ORIGINS = [
+# CORS Configuration
+default_cors_origins = [
     "http://localhost:5173",
+    "http://127.0.0.1:5173",
 ]
+cors_env = os.getenv('CORS_ALLOWED_ORIGINS')
+if cors_env:
+    configured_cors = [origin.strip() for origin in cors_env.split(',') if origin.strip()]
+    CORS_ALLOWED_ORIGINS = list(dict.fromkeys(default_cors_origins + configured_cors))
+else:
+    CORS_ALLOWED_ORIGINS = default_cors_origins

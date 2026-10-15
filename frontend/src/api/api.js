@@ -1,4 +1,6 @@
-const BASE_URL = 'http://localhost:8000/api';
+const BASE_URL = import.meta.env.VITE_API_URL
+  ? `${import.meta.env.VITE_API_URL.replace(/\/+$/, '')}/api`
+  : 'http://localhost:8000/api';
 
 // Helper to get access token from localStorage
 export const getAccessToken = () => localStorage.getItem('access_token');
